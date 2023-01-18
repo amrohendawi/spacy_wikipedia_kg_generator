@@ -3,18 +3,21 @@ import argparse
 import os
 import pandas as pd
 
-from web_scraper import wiki_scrape, get_entity_pairs
+from web_scraper import wiki_scrape
 from kg_visualization import draw_kg, filter_graph
 
+from EntityExtractor import EntityExtractor
 
 def main(args):
+    entityExtractor = EntityExtractor()
+
     if not os.path.exists(f'data/wiki_data_{args.target}.csv'):
         wiki_data = wiki_scrape(args.target)
         wiki_data.to_csv(f'data/wiki_data_{args.target}.csv', index=False)
 
     wiki_data = pd.read_csv(f'data/wiki_data_{args.target}.csv')
     if not os.path.exists(f'data/pairs_{args.target}.csv'):
-        pairs = get_entity_pairs(wiki_data.loc[0, 'text'])
+        pairs = entityExtractor.get_entity_pairs(wiki_data.loc[0, 'text'])
         pairs.to_csv(f'data/pairs_{args.target}.csv', index=False)
 
     pairs = pd.read_csv(f'data/pairs_{args.target}.csv')

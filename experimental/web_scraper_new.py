@@ -100,7 +100,7 @@ def wiki_page(page_name):
 
 def get_entity_pairs(text, coref_available=True):
     # preprocess text
-    text = re.sub(r'\n+', '.', text)  # replace multiple newlines with period
+    text = re.sub(r'\n+', '..', text)  # replace multiple newlines with period
     text = re.sub(r'\[\d+\]', ' ', text)  # remove reference numbers
     text = nlp(text)
     # if coref_available:
